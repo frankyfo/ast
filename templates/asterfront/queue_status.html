@@ -1,0 +1,64 @@
+{% load asttags %}
+<div class="col-md-8" id="queue_status">
+    <div class="panel panel-info">
+    <div class="panel-heading">Очередь</div>
+        <table class="table table-hover table-responsive">
+            <th>Агент</th>
+            <th>Статус</th>
+            <th>Пауза</th>
+            <th>Последний звонок</th>
+            <th>Принято звонков</th>
+        {% autoescape off %}
+            {% for member in data.members %}
+                <tr>
+                    {% for agent,stats in member.items %}
+                    <td>{{ agent }}</td>
+                    <td>{{ stats.status }}</td>
+                    <td>{{ stats.pause }}</td>
+                    <td>{{ stats.last }} {% if stats.last  %}назад{% endif %}</td>
+                    <td>{{ stats.calls }}</td>
+                    {% endfor %}
+            {% endfor %}
+            </tr>
+        {% endautoescape %}
+        </table>
+ </div>
+</div>
+<div class="col-md-4" id="call_coming">
+
+
+<div class="panel panel-info">
+<div class="panel-heading">Ждущие в очереди</div>
+    <div class="panel-body">
+        <table class="table table-hover table-responsive">
+            {% if data.calls %}
+                <th>Абонент</th>
+                <th>Ожидает</th>
+            {% endif %}
+            {% for caller in data.calls %}
+                <tr>
+                {% for num,stats in caller.items %}
+                    <td>{{ num }}</td>
+                    <td>{{ stats.wait }}</td>
+                </tr>
+                {% endfor %}
+            {% endfor %}
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+ <div class="panel panel-info">
+ <div class="panel-heading">Прогноз</div>
+     <div class="panel-body">
+         <table class="table table-hover table-responsive">
+        {% for name,stat in data.queue_info.items %}
+              <tr>
+                  <td>{{ name }}</td><td>{{ stat }}</td>
+              </tr>
+         {% endfor %}
+          </table>
+     </div>
+</div>
+</div>

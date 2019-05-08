@@ -1,0 +1,60 @@
+{# {% extends "header.html" %} #}
+{% block page %}
+{% load bootstrap %}{% load customfilter %}
+<script type="text/javascript">
+    var form = $('#new_popup_form');
+    form.submit(function() {
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+{#            statusCode: {#}
+{#                400: function() { $.notify('Не удалось найти объект, или такой объект уже существует', "error", {position:"right"}); }#}
+{#            },#}
+            success: function(data) {
+                $.notify('Сохранено', "info", {position:"right"});
+            },
+            error: function(xhr,status,errortext) {
+{#                if (xhr.responseText) {#}
+{#                    try {#}
+{#                        var errors = JSON.parse(xhr.responseText);#}
+{#                        window.errors = errors;#}
+{#                        console.warn('errors is: '+errors);#}
+{#                        for(var error in errors) {#}
+{#                        $('#new_popup_form #id_' + error).before('<div class="form-error">' + errors[error] + '</div>');#}
+{#                        }#}
+{#                        form.preventDefault();#}
+{#                    }#}
+{#                    catch (err) {#}
+{#                    console.log('JSON parsing error: '+err);#}
+{#                    }#}
+{#                }#}
+
+                console.log(xhr,status,errortext);
+                    $.notify('Не удалось найти объект, или такой объект уже существует', "error", {position: "right"});
+            }
+        });
+        return false;
+    });
+
+</script>
+
+<form action="{{ form_url }}"
+      method="post"
+      id="new_popup_form">
+    {% csrf_token %}
+
+    <div class="container-fluid">
+    {% for field in form %}
+            <div class="row">
+                <div id="form-errors">{{ field.errors }}</div>
+            </div>
+            <div class="row">
+            <!-- Other variant is to use col-md-7 -->
+                <div class="col-md-12">{{ field | bootstrap  }}</div>
+
+            </div>
+    {% endfor %}
+    </div>
+</form>
+{% endblock page %}

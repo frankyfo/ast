@@ -1,0 +1,44 @@
+<div>
+<div class="panel panel-info">
+ <div class="panel-heading">Пропущенные сегодня звонки дошедшие до очереди</div>
+<table class="table table-hover table-responsive">
+<tr>
+    <th>Дата</th>
+    <th>Время в очереди(сек)</th>
+    <th>Абонент</th>
+</tr>
+{% for call in abandon %}
+    <tr>
+    <td>{{ call.time }}</td>
+    <td>{{ call.data3 }}</td>
+    <td>{{ call.get_caller }} </td>
+    </tr>
+{% endfor %}
+</table>
+</div>
+</div>
+<div class="panel panel-info">
+ <div class="panel-heading">Сброшенные агентами звонки(<5сек) дошедшие до очереди</div>
+<br>
+<table class="table table-hover table-responsive">
+<tr>
+    <th>Дата</th>
+    <th>Время разговора(сек)</th>
+    <th>Абонент</th>
+    <th>Агент</th>
+    <th>Оценка</th>
+</tr>
+{% load asttags %}
+{% for call in hang %}
+    <tr>
+    <td>{{ call.time }}</td>
+    <td>{{ call.data2 }}</td>
+    <td>{{ call.get_caller }} </td>
+    <td>{{ call.agent|agent_parse }} </td>
+    <td>{{ call.queue_mark }}</td>
+    </tr>
+{% endfor %}
+</table>
+</div>
+</div>
+</div>

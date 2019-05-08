@@ -1,0 +1,18 @@
+{% load asttags %}
+<div class="col-md-12">
+<div class="panel panel-info">
+ <div class="panel-heading">Исходяшие звонки</div>
+<table class="table table-hover table-responsive">
+
+<th>Телефон</th>
+<th>Количество звонков</th>
+{% for call in calls %}
+            <tr>
+                <td> {{ call.src }}</td>
+                <td> {{ call.src__count }}</td>
+            </tr>
+
+{% endfor %}
+</table>
+</div></div>
+</div>

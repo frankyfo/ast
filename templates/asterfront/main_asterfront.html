@@ -1,0 +1,28 @@
+{% extends "header.html" %}
+{% block pagetitle %}
+<title>Очередь Call-центра</title>
+{% endblock %}
+
+{% block header %}
+<script src="/static/js/ast.js"></script>
+{% endblock %}
+
+{% block navleft %}
+    <li role="presentation" onclick="jsDrawTab(httpget('abandon'))"><a href="#">Сброшенные звонки</a></li>
+    <li role="presentation" onclick="jsDrawTab(httpget('outcalls'))"><a href="#">Исходящие</a></li>
+    {% if perms.asterfront.add_blacklisted %}
+    <li role="presentation" onclick="launch_bootbox('addtoblack')" > <a href="#">Заблокировать спамера</a></li>
+    {% endif %}
+{% endblock %}
+{% block page %}
+
+<div class="container-fluid" width="100%">
+<div class="row">
+    <div class="col-md-7">
+        <div id="queue_status"></div>
+    </div>
+    <div class="col-md-5">
+        <div id="tabcontent"></div>
+    </div>
+</div>
+{% endblock %}

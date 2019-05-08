@@ -1,0 +1,25 @@
+{% extends "header.html" %}
+{% load static %}
+{% block header %}
+ <link href="{% static "css/signin.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block page %}
+<div class="container">
+      <form class="form-signin" role="form" action="/login" method="post">
+          {% csrf_token %}
+        <h2 class="form-signin-heading">Авторизация</h2>
+        <input class="hidden" type="hidden" name="next" value="{{ next }}">
+          {% if errors %}
+            <ul>
+            {% for error in errors %}
+                <li><strong>{{ error|escape }}</strong></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        <input type="text" class="form-control" placeholder="Login" required autofocus name="username">
+        <input type="password" class="form-control" placeholder="Password" required name="password">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+      </form>
+</div>
+{% endblock %}
